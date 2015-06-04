@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SurveyPage.Models.Review>
+﻿@model IEnumerable<SurveyPage.Models.Survey>
 
 @{
     ViewBag.Title = "Index";
@@ -14,6 +14,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Expertise)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Professionalism)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Accountability)
+        </th>
         <th></th>
     </tr>
 
@@ -21,6 +27,12 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Expertise)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Professionalism)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Accountability)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

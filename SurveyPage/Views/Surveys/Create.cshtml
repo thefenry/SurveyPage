@@ -1,0 +1,89 @@
+﻿@model SurveyPage.Models.Survey
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2 class="text-center">Ivan Survey App</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal col-sm-offset-2">
+        <h4>Begin Survey</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-xs-4">Questions</label>
+            <div class="col-xs-8">
+                Rating 1 - 5
+            </div>
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.Expertise, htmlAttributes: new { @class = "control-label col-xs-4" })
+
+
+            <div class="col-xs-8">
+                @{
+    for (int i = 0; i < 5; i++)
+    {
+        <div class="col-xs-1">
+            @Html.RadioButtonFor(model => model.Expertise, i + 1)
+        </div>
+    }
+                }
+            </div>
+
+            @Html.ValidationMessageFor(model => model.Expertise, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Professionalism, htmlAttributes: new { @class = "control-label col-xs-4" })
+            <div class="col-xs-8">
+                @{
+    for (int i = 0; i < 5; i++)
+    {
+        <div class="col-xs-1">
+            @Html.RadioButtonFor(model => model.Professionalism, i + 1)
+        </div>
+    }
+                }
+
+                @Html.ValidationMessageFor(model => model.Professionalism, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Accountability, htmlAttributes: new { @class = "control-label col-xs-4" })
+            <div class="col-xs-8">
+                @{
+    for (int i = 0; i < 5; i++)
+    {
+        <div class="col-xs-1">
+            @Html.RadioButtonFor(model => model.Accountability, i + 1)
+        </div>
+    }
+                }
+
+                @Html.ValidationMessageFor(model => model.Accountability, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

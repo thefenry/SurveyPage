@@ -5,15 +5,15 @@ namespace SurveyPage.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SurveyPageContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SurveyPage.Models.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "SurveyPageContext";
+            AutomaticMigrationsEnabled = true;
+            ContextKey = "SurveyPage.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(SurveyPageContext context)
+        protected override void Seed(SurveyPage.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
