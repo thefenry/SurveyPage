@@ -21,7 +21,7 @@ namespace SurveyPage.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("SurveyApp", throwIfV1Schema: false)
         {
         }
 
@@ -29,5 +29,7 @@ namespace SurveyPage.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<SurveyPage.Models.Survey> Surveys { get; set; }
     }
 }

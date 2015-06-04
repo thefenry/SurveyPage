@@ -10,107 +10,107 @@ using SurveyPage.Models;
 
 namespace SurveyPage.Controllers
 {
-    public class ReviewsController : Controller
+    public class SurveysController : Controller
     {
-        private SurveyPageContext db = new SurveyPageContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Reviews
+        // GET: Surveys
         public ActionResult Index()
         {
-            return View(db.Reviews.ToList());
+            return View(db.Surveys.ToList());
         }
 
-        // GET: Reviews/Details/5
+        // GET: Surveys/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            Survey survey = db.Surveys.Find(id);
+            if (survey == null)
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return View(survey);
         }
 
-        // GET: Reviews/Create
+        // GET: Surveys/Create
         public ActionResult Create()
-        {            
+        {
             return View();
         }
 
-        // POST: Reviews/Create
+        // POST: Surveys/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Expertise, Professionalism, Accountability")] Review review)
+        public ActionResult Create([Bind(Include = "Id,Expertise,Professionalism,Accountability")] Survey survey)
         {
             if (ModelState.IsValid)
             {
-                db.Reviews.Add(review);
+                db.Surveys.Add(survey);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(review);
+            return View(survey);
         }
 
-        // GET: Reviews/Edit/5
+        // GET: Surveys/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            Survey survey = db.Surveys.Find(id);
+            if (survey == null)
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return View(survey);
         }
 
-        // POST: Reviews/Edit/5
+        // POST: Surveys/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Expertise")] Review review)
+        public ActionResult Edit([Bind(Include = "Id,Expertise,Professionalism,Accountability")] Survey survey)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(review).State = EntityState.Modified;
+                db.Entry(survey).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(review);
+            return View(survey);
         }
 
-        // GET: Reviews/Delete/5
+        // GET: Surveys/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            Survey survey = db.Surveys.Find(id);
+            if (survey == null)
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return View(survey);
         }
 
-        // POST: Reviews/Delete/5
+        // POST: Surveys/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Review review = db.Reviews.Find(id);
-            db.Reviews.Remove(review);
+            Survey survey = db.Surveys.Find(id);
+            db.Surveys.Remove(survey);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
