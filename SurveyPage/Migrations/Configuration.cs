@@ -10,6 +10,7 @@ namespace SurveyPage.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "SurveyPage.Models.ApplicationDbContext";
         }
 

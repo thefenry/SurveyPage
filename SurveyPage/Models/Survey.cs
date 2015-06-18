@@ -11,6 +11,6 @@ namespace SurveyPage.Models
         public int Expertise { get; set; }
         public int Professionalism { get; set; }
         public int Accountability { get; set; }
-        public virtual MyUser user { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

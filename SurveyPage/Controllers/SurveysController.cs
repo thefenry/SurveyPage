@@ -8,12 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using SurveyPage.Models;
 
+using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
+
 namespace SurveyPage.Controllers
 {
+    [Authorize]
     public class SurveysController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+           
         // GET: Surveys
         public ActionResult Index()
         {
@@ -46,12 +50,15 @@ namespace SurveyPage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Expertise,Professionalism,Accountability")] Survey survey)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Expertise,Professionalism,Accountability")] Survey survey)
         {
+            var currentUser = db.Users.Find(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
+                survey.User = currentUser;
                 db.Surveys.Add(survey);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
