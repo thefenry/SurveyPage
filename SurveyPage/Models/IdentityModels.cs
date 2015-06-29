@@ -31,5 +31,7 @@ namespace SurveyPage.Models
         }
 
         public System.Data.Entity.DbSet<SurveyPage.Models.Survey> Surveys { get; set; }
+
+        public System.Data.Entity.DbSet<SurveyPage.Models.Question> Questions { get; set; }
     }
 }

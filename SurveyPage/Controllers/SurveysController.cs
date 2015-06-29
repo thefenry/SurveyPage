@@ -45,25 +45,42 @@ namespace SurveyPage.Controllers
             return View();
         }
 
-        // POST: Surveys/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+         //POST: Surveys/Create
+         //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+         //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Expertise,Professionalism,Accountability")] Survey survey)
+        public ActionResult Create(Survey survey, IEnumerable<Question> questions, FormCollection QuestionList, string username)
         {
-            var currentUser = db.Users.Find(User.Identity.GetUserId());
-            if (ModelState.IsValid)
+            foreach (var item in QuestionList.AllKeys)
             {
-                survey.User = currentUser;
-                db.Surveys.Add(survey);
-                await db.SaveChangesAsync();
-                //db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (QuestionList[item] != "__RequestVerificationToken")
+                {
+                    Question question = new Question();
+                    question.SurveyQuestion = QuestionList[item].ToString();
+                    db.Questions.Add(question);
+                    db.SaveChanges();
+                }
 
-            return View(survey);
+                //survey.Questions.Add(QuestionList[item]);
+            }
+            return View();
         }
+        //public async Task<ActionResult> Create([Bind(Include = "Questions")] Survey survey, IEnumerable<Question> questions)
+        //{
+        //    var currentUser = db.Users.Find(User.Identity.GetUserId());
+        //    if (ModelState.IsValid)
+        //    {                
+        //        //survey.User = currentUser;
+        //        //db.Surveys.Add(survey);
+        //        //await db.SaveChangesAsync();  This needs Modification
+        //        //db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    //return View(survey);
+        //    return View();
+        //}
 
         // GET: Surveys/Edit/5
         public ActionResult Edit(int? id)

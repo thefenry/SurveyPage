@@ -1,26 +1,38 @@
-﻿@model SurveyPage.Models.Survey
+﻿@*@model SurveyPage.Models.Survey*@
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Survey";
 }
 <h2 class="text-center">Ivan Survey App</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal col-sm-offset-2">
-        <h4>Begin Survey</h4>
+        <h4>Create Survey</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <p>Create all the questions you wish to create below. When you are complete press the create button to finish the survey.</p>
+        
         <div class="form-group">
+            <label>Question 1</label>
+            @Html.TextBox("test")
+            @*<input type="text" />*@
+        </div>
+        <div class="form-group">
+            <label>Question 2</label>
+            @*<input type="text" />*@
+            @Html.TextBox("test")
+
+        </div>
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+        @*<div class="form-group">
             <label class="control-label col-xs-4">Questions</label>
             <div class="col-xs-8">
                 Rating 1 - 5
             </div>
-        </div>
-        <div class="form-group">
+        </div>*@
+        @*<div class="form-group">
 
             @Html.LabelFor(model => model.Expertise, htmlAttributes: new { @class = "control-label col-xs-4" })
 
@@ -69,7 +81,7 @@
 
                 @Html.ValidationMessageFor(model => model.Accountability, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
 
         <div class="form-group">
