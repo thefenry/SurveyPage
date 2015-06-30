@@ -1,5 +1,7 @@
 ﻿@*@model SurveyPage.Models.Survey*@
 
+@model IList<SurveyPage.ViewModels.SurveyQuestionViewModel>
+
 @{
     ViewBag.Title = "Create Survey";
 }
@@ -14,17 +16,28 @@
         <hr />
         <p>Create all the questions you wish to create below. When you are complete press the create button to finish the survey.</p>
         
-        <div class="form-group">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <div class="form-group">
+                <label>Question 1</label>
+                @*@Html.TextBox("test")*@
+                @Html.TextBoxFor(x => x[i].SurveyQuestion)
+                @*<input type="text" />*@
+            </div>
+        }
+        @*<div class="form-group">
             <label>Question 1</label>
-            @Html.TextBox("test")
+            @Html.TextBox("test")*@
             @*<input type="text" />*@
-        </div>
+        @*</div>
         <div class="form-group">
-            <label>Question 2</label>
+            <label>Question 2</label>*@
             @*<input type="text" />*@
-            @Html.TextBox("test")
+            @*@Html.TextBox("test")
 
-        </div>
+        </div>*@
+
+
         @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
         @*<div class="form-group">
             <label class="control-label col-xs-4">Questions</label>

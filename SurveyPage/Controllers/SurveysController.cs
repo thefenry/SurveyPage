@@ -10,6 +10,7 @@ using SurveyPage.Models;
 
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using SurveyPage.ViewModels;
 
 namespace SurveyPage.Controllers
 {
@@ -17,7 +18,7 @@ namespace SurveyPage.Controllers
     public class SurveysController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-           
+
         // GET: Surveys
         public ActionResult Index()
         {
@@ -42,32 +43,32 @@ namespace SurveyPage.Controllers
         // GET: Surveys/Create
         public ActionResult Create()
         {
-            return View();
+            SurveyQuestionViewModel surveyModel = new SurveyQuestionViewModel();
+            List<SurveyQuestionViewModel> surveyModelList = new List<SurveyQuestionViewModel>();
+            surveyModelList.Add(surveyModel);
+            return View(surveyModelList);
         }
 
-         //POST: Surveys/Create
-         //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-         //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Surveys/Create
+        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FormCollection QuestionList)
+        public ActionResult Create(IEnumerable<SurveyQuestionViewModel> questionEnum)
         {
 
             Survey survey = new Survey();
-            foreach (var item in QuestionList.AllKeys)
+            foreach (var item in questionEnum)
             {
-                if (item != "__RequestVerificationToken")
-                {
-                    Question question = new Question();
-                    question.SurveyQuestion = QuestionList[item].ToString();
-                    question.Survey = survey;
-                    //question.SurveyId = survey;
-                    db.Questions.Add(question);
-                }
-                       
+
+                Question question = new Question();
+                question.SurveyQuestion = item.SurveyQuestion.ToString();
+                question.Survey = survey;
+                db.Questions.Add(question);
+
             }
             db.SaveChanges();
-            return View();
+            return View("Index");
         }
         //public async Task<ActionResult> Create([Bind(Include = "Questions")] Survey survey, IEnumerable<Question> questions)
         //{
