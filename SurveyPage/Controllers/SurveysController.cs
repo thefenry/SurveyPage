@@ -50,20 +50,23 @@ namespace SurveyPage.Controllers
          //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Survey survey, IEnumerable<Question> questions, FormCollection QuestionList, string username)
+        public ActionResult Create(FormCollection QuestionList)
         {
+
+            Survey survey = new Survey();
             foreach (var item in QuestionList.AllKeys)
             {
-                if (QuestionList[item] != "__RequestVerificationToken")
+                if (item != "__RequestVerificationToken")
                 {
                     Question question = new Question();
                     question.SurveyQuestion = QuestionList[item].ToString();
+                    question.Survey = survey;
+                    //question.SurveyId = survey;
                     db.Questions.Add(question);
-                    db.SaveChanges();
                 }
-
-                //survey.Questions.Add(QuestionList[item]);
+                       
             }
+            db.SaveChanges();
             return View();
         }
         //public async Task<ActionResult> Create([Bind(Include = "Questions")] Survey survey, IEnumerable<Question> questions)
