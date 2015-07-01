@@ -10,6 +10,7 @@ using SurveyPage.Models;
 
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using SurveyPage.ViewModels;
 
 namespace SurveyPage.Controllers
 {
@@ -17,7 +18,7 @@ namespace SurveyPage.Controllers
     public class SurveysController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-           
+
         // GET: Surveys
         public ActionResult Index()
         {
@@ -42,28 +43,45 @@ namespace SurveyPage.Controllers
         // GET: Surveys/Create
         public ActionResult Create()
         {
-            return View();
+            SurveyQuestionViewModel surveyModel = new SurveyQuestionViewModel();
+            List<SurveyQuestionViewModel> surveyModelList = new List<SurveyQuestionViewModel>();
+            surveyModelList.Add(surveyModel);
+            return View(surveyModelList);
         }
 
-        // POST: Surveys/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Surveys/Create
+        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Expertise,Professionalism,Accountability")] Survey survey)
+        public ActionResult Create(IEnumerable<SurveyQuestionViewModel> questions)
         {
-            var currentUser = db.Users.Find(User.Identity.GetUserId());
-            if (ModelState.IsValid)
+            Survey survey = new Survey();
+            foreach (var item in questions)
             {
-                survey.User = currentUser;
-                db.Surveys.Add(survey);
-                await db.SaveChangesAsync();
-                //db.SaveChanges();
-                return RedirectToAction("Index");
+                Question question = new Question();
+                question.SurveyQuestion = item.SurveyQuestion.ToString();
+                question.Survey = survey;
+                db.Questions.Add(question);
             }
-
-            return View(survey);
+            db.SaveChanges();
+            return View("Index");
         }
+        //public async Task<ActionResult> Create([Bind(Include = "Questions")] Survey survey, IEnumerable<Question> questions)
+        //{
+        //    var currentUser = db.Users.Find(User.Identity.GetUserId());
+        //    if (ModelState.IsValid)
+        //    {                
+        //        //survey.User = currentUser;
+        //        //db.Surveys.Add(survey);
+        //        //await db.SaveChangesAsync();  This needs Modification
+        //        //db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    //return View(survey);
+        //    return View();
+        //}
 
         // GET: Surveys/Edit/5
         public ActionResult Edit(int? id)
