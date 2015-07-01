@@ -18,13 +18,15 @@
         
         @for (int i = 0; i < Model.Count; i++)
         {
-            <div class="form-group">
+            <div class="form-group" id="form">
                 <label>Question 1</label>
                 @*@Html.TextBox("test")*@
                 @Html.TextBoxFor(x => x[i].SurveyQuestion)
                 @*<input type="text" />*@
             </div>
         }
+
+        <input type="button" onclick="addtext();" value="add" />
         @*<div class="form-group">
             <label>Question 1</label>
             @Html.TextBox("test")*@
@@ -112,3 +114,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script type="text/javascript" >
+    function addtext() {
+        $("#form").append('<input name="[1].SurveyQuestion" type="text" ></input>')
+    }
+</script>

@@ -54,18 +54,15 @@ namespace SurveyPage.Controllers
         //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IEnumerable<SurveyQuestionViewModel> questionEnum)
+        public ActionResult Create(IEnumerable<SurveyQuestionViewModel> questions)
         {
-
             Survey survey = new Survey();
-            foreach (var item in questionEnum)
+            foreach (var item in questions)
             {
-
                 Question question = new Question();
                 question.SurveyQuestion = item.SurveyQuestion.ToString();
                 question.Survey = survey;
                 db.Questions.Add(question);
-
             }
             db.SaveChanges();
             return View("Index");
