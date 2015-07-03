@@ -65,7 +65,7 @@ namespace SurveyPage.Controllers
                 db.Questions.Add(question);
             }
             db.SaveChanges();
-            return View("Index");
+            return RedirectToAction("Index");
         }
         //public async Task<ActionResult> Create([Bind(Include = "Questions")] Survey survey, IEnumerable<Question> questions)
         //{

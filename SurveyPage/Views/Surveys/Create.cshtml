@@ -20,84 +20,11 @@
         {
             <div class="form-group" id="form">
                 <label>Question 1</label>
-                @*@Html.TextBox("test")*@
                 @Html.TextBoxFor(x => x[i].SurveyQuestion)
-                @*<input type="text" />*@
             </div>
         }
 
         <input type="button" onclick="addtext();" value="add" />
-        @*<div class="form-group">
-            <label>Question 1</label>
-            @Html.TextBox("test")*@
-            @*<input type="text" />*@
-        @*</div>
-        <div class="form-group">
-            <label>Question 2</label>*@
-            @*<input type="text" />*@
-            @*@Html.TextBox("test")
-
-        </div>*@
-
-
-        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-        @*<div class="form-group">
-            <label class="control-label col-xs-4">Questions</label>
-            <div class="col-xs-8">
-                Rating 1 - 5
-            </div>
-        </div>*@
-        @*<div class="form-group">
-
-            @Html.LabelFor(model => model.Expertise, htmlAttributes: new { @class = "control-label col-xs-4" })
-
-
-            <div class="col-xs-8">
-                @{
-    for (int i = 0; i < 5; i++)
-    {
-        <div class="col-xs-1">
-            @Html.RadioButtonFor(model => model.Expertise, i + 1)
-        </div>
-    }
-                }
-            </div>
-
-            @Html.ValidationMessageFor(model => model.Expertise, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Professionalism, htmlAttributes: new { @class = "control-label col-xs-4" })
-            <div class="col-xs-8">
-                @{
-    for (int i = 0; i < 5; i++)
-    {
-        <div class="col-xs-1">
-            @Html.RadioButtonFor(model => model.Professionalism, i + 1)
-        </div>
-    }
-                }
-
-                @Html.ValidationMessageFor(model => model.Professionalism, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Accountability, htmlAttributes: new { @class = "control-label col-xs-4" })
-            <div class="col-xs-8">
-                @{
-    for (int i = 0; i < 5; i++)
-    {
-        <div class="col-xs-1">
-            @Html.RadioButtonFor(model => model.Accountability, i + 1)
-        </div>
-    }
-                }
-
-                @Html.ValidationMessageFor(model => model.Accountability, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

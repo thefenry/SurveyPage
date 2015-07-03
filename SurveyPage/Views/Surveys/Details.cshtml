@@ -10,29 +10,17 @@
     <h4>Survey</h4>
     <hr />
     <dl class="dl-horizontal">
+        @foreach (var item in Model.Questions)
+        {
+            
         <dt>
-            @Html.DisplayNameFor(model => model.Expertise)
+            @Html.DisplayNameFor(model => item.SurveyQuestion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Expertise)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Professionalism)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Professionalism)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Accountability)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Accountability)
-        </dd>
+            @Html.DisplayFor(model => item.SurveyQuestion)
+        </dd>     
+        }
 
     </dl>
 </div>

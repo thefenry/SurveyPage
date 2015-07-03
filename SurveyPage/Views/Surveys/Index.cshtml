@@ -9,6 +9,15 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@foreach (var item in Model)
+{
+    @Html.DisplayFor(modelItem=> item.Id)
+    @Html.ActionLink("Details", "Details", new { id = item.Id })
+}
+<div>
+    
+</div>
 @*<table class="table">
     <tr>
         <th>
