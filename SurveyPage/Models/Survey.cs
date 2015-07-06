@@ -12,7 +12,8 @@ namespace SurveyPage.Models
         //public int Professionalism { get; set; }
         //public int Accountability { get; set; }
         //public virtual ApplicationUser User { get; set; }
-        public virtual ICollection<Question> Questions { get; set; }
+        public string SurveyName { get; set; }
+        public virtual List<Question> Questions { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
     }
 }

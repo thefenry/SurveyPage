@@ -7,22 +7,16 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Survey</h4>
+    <h4>@Html.DisplayFor(model => model.SurveyName)</h4>
     <hr />
-    <dl class="dl-horizontal">
-        @foreach (var item in Model.Questions)
+    <ul class="list-group">
+        @foreach (var question in Model.Questions)
         {
-            
-        <dt>
-            @Html.DisplayNameFor(model => item.SurveyQuestion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => item.SurveyQuestion)
-        </dd>     
+            <li class="list-group-item">
+                @Html.DisplayFor(model => question.SurveyQuestion)
+            </li>
         }
-
-    </dl>
+    </ul>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

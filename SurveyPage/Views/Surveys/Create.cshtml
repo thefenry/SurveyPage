@@ -1,6 +1,6 @@
 ﻿@*@model SurveyPage.Models.Survey*@
 
-@model IList<SurveyPage.ViewModels.SurveyQuestionViewModel>
+@model SurveyPage.ViewModels.SurveyViewModel
 
 @{
     ViewBag.Title = "Create Survey";
@@ -15,16 +15,27 @@
         <h4>Create Survey</h4>
         <hr />
         <p>Create all the questions you wish to create below. When you are complete press the create button to finish the survey.</p>
-        
-        @for (int i = 0; i < Model.Count; i++)
-        {
-            <div class="form-group" id="form">
-                <label>Question 1</label>
-                @Html.TextBoxFor(x => x[i].SurveyQuestion)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SurveyName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SurveyName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SurveyName, "", new { @class = "text-danger" })
             </div>
-        }
+        </div>
 
-        <input type="button" onclick="addtext();" value="add" />
+            <div id="questionform">
+        @for (int i = 0; i < Model.SurveyQuestions.Count; i++)
+        {
+                <div class="form-group" >
+                    <label>Question 1</label>
+                    @Html.TextBoxFor(x => x.SurveyQuestions[i].SurveyQuestion)
+                    @*<input type="button" onclick="deleteQuestion(this);" value="delete" />*@
+                </div>
+        }
+            </div>
+
+        <input type="button" id="addQuestion" value="add Question" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -43,7 +54,11 @@
 }
 
 <script type="text/javascript" >
-    function addtext() {
-        $("#form").append('<input name="[1].SurveyQuestion" type="text" ></input>')
-    }
+    $(document).ready(function () {
+        $("#addQuestion").click(function () {
+            var Id = $("#questionform :text").length;
+            $("#questionform").append('<div class="form-group" ><label>Question' + (Id + 1) + '</label><input name="SurveyQuestions[' + Id + '].SurveyQuestion" type="text" value></div>');
+
+        })
+    })
 </script>
