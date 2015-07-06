@@ -42,20 +42,8 @@ namespace SurveyPage.Controllers
 
         // GET: Surveys/Create
         public ActionResult Create()
-        {
-            //Survey survey = new Survey();
-
-            //SurveyViewModel surveyViewModel = new SurveyViewModel();
-            
-            //SurveyQuestionViewModel surveyModel = new SurveyQuestionViewModel();
-
-            
-
-            //List<SurveyQuestionViewModel> surveyModelList = new List<SurveyQuestionViewModel>();
-            //surveyModelList.Add(surveyModel);
-            //return View(surveyModelList);
-            SurveyViewModel surveyViewModel = new SurveyViewModel();
-            //surveyViewModel.SurveyQuestions.Add(new SurveyQuestionViewModel());
+        {            
+            SurveyViewModel surveyViewModel = new SurveyViewModel();            
             surveyViewModel.SurveyQuestions.Add(new Question());
             return View(surveyViewModel);
         }
@@ -65,7 +53,7 @@ namespace SurveyPage.Controllers
         //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SurveyViewModel questions)
+        public async Task<ActionResult> Create(SurveyViewModel questions)
         {
             Survey survey = new Survey();
             survey.SurveyName = questions.SurveyName;
@@ -76,26 +64,9 @@ namespace SurveyPage.Controllers
             }
             db.Surveys.Add(survey);
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
-            //return View("Index");
-            
         }
-        //public async Task<ActionResult> Create([Bind(Include = "Questions")] Survey survey, IEnumerable<Question> questions)
-        //{
-        //    var currentUser = db.Users.Find(User.Identity.GetUserId());
-        //    if (ModelState.IsValid)
-        //    {                
-        //        //survey.User = currentUser;
-        //        //db.Surveys.Add(survey);
-        //        //await db.SaveChangesAsync();  This needs Modification
-        //        //db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    //return View(survey);
-        //    return View();
-        //}
 
         // GET: Surveys/Edit/5
         public ActionResult Edit(int? id)
@@ -104,6 +75,7 @@ namespace SurveyPage.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Survey survey = db.Surveys.Find(id);
             if (survey == null)
             {
@@ -117,7 +89,7 @@ namespace SurveyPage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Expertise,Professionalism,Accountability")] Survey survey)
+        public ActionResult Edit(Survey survey)
         {
             if (ModelState.IsValid)
             {
