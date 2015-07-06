@@ -43,10 +43,21 @@ namespace SurveyPage.Controllers
         // GET: Surveys/Create
         public ActionResult Create()
         {
-            SurveyQuestionViewModel surveyModel = new SurveyQuestionViewModel();
-            List<SurveyQuestionViewModel> surveyModelList = new List<SurveyQuestionViewModel>();
-            surveyModelList.Add(surveyModel);
-            return View(surveyModelList);
+            //Survey survey = new Survey();
+
+            //SurveyViewModel surveyViewModel = new SurveyViewModel();
+            
+            //SurveyQuestionViewModel surveyModel = new SurveyQuestionViewModel();
+
+            
+
+            //List<SurveyQuestionViewModel> surveyModelList = new List<SurveyQuestionViewModel>();
+            //surveyModelList.Add(surveyModel);
+            //return View(surveyModelList);
+            SurveyViewModel surveyViewModel = new SurveyViewModel();
+            //surveyViewModel.SurveyQuestions.Add(new SurveyQuestionViewModel());
+            surveyViewModel.SurveyQuestions.Add(new Question());
+            return View(surveyViewModel);
         }
 
         //POST: Surveys/Create
@@ -54,18 +65,21 @@ namespace SurveyPage.Controllers
         //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IEnumerable<SurveyQuestionViewModel> questions)
+        public ActionResult Create(SurveyViewModel questions)
         {
             Survey survey = new Survey();
-            foreach (var item in questions)
+            survey.SurveyName = questions.SurveyName;
+            survey.Questions = new List<Question>();
+            foreach (var item in questions.SurveyQuestions)
             {
-                Question question = new Question();
-                question.SurveyQuestion = item.SurveyQuestion.ToString();
-                question.Survey = survey;
-                db.Questions.Add(question);
+                survey.Questions.Add(item);
             }
+            db.Surveys.Add(survey);
+
             db.SaveChanges();
-            return View("Index");
+            return RedirectToAction("Index");
+            //return View("Index");
+            
         }
         //public async Task<ActionResult> Create([Bind(Include = "Questions")] Survey survey, IEnumerable<Question> questions)
         //{

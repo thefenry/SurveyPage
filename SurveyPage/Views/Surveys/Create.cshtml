@@ -1,6 +1,6 @@
 ﻿@*@model SurveyPage.Models.Survey*@
 
-@model IList<SurveyPage.ViewModels.SurveyQuestionViewModel>
+@model SurveyPage.ViewModels.SurveyViewModel
 
 @{
     ViewBag.Title = "Create Survey";
@@ -16,12 +16,21 @@
         <hr />
         <p>Create all the questions you wish to create below. When you are complete press the create button to finish the survey.</p>
         
-        @for (int i = 0; i < Model.Count; i++)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SurveyName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SurveyName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SurveyName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @for (int i = 0; i < Model.SurveyQuestions.Count; i++)
         {
             <div id="questionform">
                 <div class="form-group" >
                     <label>Question 1</label>
-                    @Html.TextBoxFor(x => x[i].SurveyQuestion)
+                    @Html.TextBoxFor(x => x.SurveyQuestions[i].SurveyQuestion)
                     @*    <input type="button" onclick="deleteQuestion(this);" value="delete" />*@
                 </div>
             </div>
@@ -49,7 +58,7 @@
     $(document).ready(function () {
         $("#addQuestion").click(function () {
             var Id = $("#questionform :text").length;
-            $("#questionform").append('<div class="form-group" ><label>Question' + (Id + 1) + '</label><input name="[' + Id + '].SurveyQuestion" type="text" value></div>');
+            $("#questionform").append('<div class="form-group" ><label>Question' + (Id + 1) + '</label><input name="SurveyQuestions[' + Id + '].SurveyQuestion" type="text" value></div>');
 
         })
     })
