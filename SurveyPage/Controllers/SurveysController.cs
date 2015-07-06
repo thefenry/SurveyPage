@@ -63,7 +63,6 @@ namespace SurveyPage.Controllers
                 survey.Questions.Add(item);
             }
             db.Surveys.Add(survey);
-
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
