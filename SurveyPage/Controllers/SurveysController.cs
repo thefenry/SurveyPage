@@ -75,12 +75,34 @@ namespace SurveyPage.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Survey survey = db.Surveys.Find(id);
-            if (survey == null)
-            {
-                return HttpNotFound();
-            }
-            return View(survey);
+            //Survey survey = db.Surveys.Find(id);
+            //if (survey == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            SurveyViewModel surveyViewModel = new SurveyViewModel();
+            surveyViewModel = db.Surveys
+                                .Where(x=>x.Id == id)
+                                .Select( x=> new SurveyViewModel
+                                {
+                                    SurveyName = x.SurveyName,
+                                    SurveyId = x.Id,
+                                    SurveyQuestions = x.Questions
+                                }).FirstOrDefault();
+
+            //viewModel = db.UserProfiles
+            // .Where(x => x.UserId == id)
+            // .Select(x => new EditAdminModelVM
+            // {
+            //     FirstName = x.FirstName,
+            //     LastName = x.LastName,
+            //     Email = x.Email,
+            //     UserName = x.UserName
+            // });
+
+
+            return View(surveyViewModel);
         }
 
         // POST: Surveys/Edit/5
@@ -88,15 +110,20 @@ namespace SurveyPage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Survey survey)
+        //public ActionResult Edit(Survey survey)
+        public ActionResult Edit(Survey survey, SurveyViewModel surveyViewModel)
         {
+            survey.SurveyName = surveyViewModel.SurveyName;
+            survey.Questions.AddRange(surveyViewModel.SurveyQuestions);
             if (ModelState.IsValid)
             {
                 db.Entry(survey).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(survey);
+            //return View(survey);
+            return RedirectToAction("Index");
+
         }
 
         // GET: Surveys/Delete/5
