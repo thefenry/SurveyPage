@@ -15,5 +15,10 @@ namespace SurveyPage.Models
         public string SurveyName { get; set; }
         public virtual List<Question> Questions { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
+
+        public Survey()
+        {
+            Questions = new List<Question>();
+        }
     }
 }
