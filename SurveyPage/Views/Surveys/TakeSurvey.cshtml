@@ -1,0 +1,31 @@
+﻿@model SurveyPage.ViewModels.SurveyResponseViewModel
+
+@{
+    ViewBag.Title = "TakeSurvey";
+}
+
+<h2>TakeSurvey</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    foreach (var item in Model.SurveyQuestions)
+    {
+        <div class="form-group">
+            <div>
+                @Html.DisplayFor(modelItem => item.SurveyQuestion)
+            </div>
+            <div>
+                @*@for (int i = 0; i < 5; i++)
+                {
+                    @Html.Check
+                }*@
+            </div>
+            <div>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </div>
+        </div>
+    }
+}
