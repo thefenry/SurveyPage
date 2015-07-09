@@ -11,6 +11,11 @@ namespace SurveyPage.Models
         public string SurveyQuestion { get; set; }
         public int SurveyId { get; set; }
         public virtual Survey Survey { get; set; }
-        public virtual ICollection<Answer> Answers { get; set; }
+        public virtual List<Answer> Answers { get; set; }
+
+        public Question()
+        {
+            Answers = new List<Answer>();
+        }
     }
 }

@@ -17,4 +17,21 @@ namespace SurveyPage.ViewModels
         public string SurveyName { get; set; }
         public IList<Question> SurveyQuestions { get; set; }
     }
+
+    public class SurveyResponseViewModel
+    {
+        public SurveyResponseViewModel()
+        {
+            this.SurveyQuestions = new List<Question>();
+            this.QuestionAnswers = new List<Answer>();
+        }
+
+        public int SurveyId { get; set; }
+        public string SurveyName { get; set; }
+        public IList<Question> SurveyQuestions { get; set; }
+        public IList<Answer> QuestionAnswers { get; set; }
+    }
+
+
+
 }

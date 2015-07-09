@@ -42,8 +42,8 @@ namespace SurveyPage.Controllers
 
         // GET: Surveys/Create
         public ActionResult Create()
-        {            
-            SurveyViewModel surveyViewModel = new SurveyViewModel();            
+        {
+            SurveyViewModel surveyViewModel = new SurveyViewModel();
             surveyViewModel.SurveyQuestions.Add(new Question());
             return View(surveyViewModel);
         }
@@ -75,32 +75,15 @@ namespace SurveyPage.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            //Survey survey = db.Surveys.Find(id);
-            //if (survey == null)
-            //{
-            //    return HttpNotFound();
-            //}
-
             SurveyViewModel surveyViewModel = new SurveyViewModel();
             surveyViewModel = db.Surveys
-                                .Where(x=>x.Id == id)
-                                .Select( x=> new SurveyViewModel
+                                .Where(x => x.Id == id)
+                                .Select(x => new SurveyViewModel
                                 {
                                     SurveyName = x.SurveyName,
                                     SurveyId = x.Id,
                                     SurveyQuestions = x.Questions
                                 }).FirstOrDefault();
-
-            //viewModel = db.UserProfiles
-            // .Where(x => x.UserId == id)
-            // .Select(x => new EditAdminModelVM
-            // {
-            //     FirstName = x.FirstName,
-            //     LastName = x.LastName,
-            //     Email = x.Email,
-            //     UserName = x.UserName
-            // });
-
 
             return View(surveyViewModel);
         }
@@ -116,26 +99,26 @@ namespace SurveyPage.Controllers
             survey.SurveyName = surveyViewModel.SurveyName;
             if (ModelState.IsValid)
             {
-            foreach (var question in surveyViewModel.SurveyQuestions)
-            {
-                if (true)               
+                foreach (var question in surveyViewModel.SurveyQuestions)
                 {
-                    var existingQuestion = db.Questions.Where(x => x.Id == question.Id).FirstOrDefault();
-                    if (existingQuestion == null)
+                    if (true)
                     {
-                        question.SurveyId = survey.Id;
-                        db.Questions.Add(question);
+                        var existingQuestion = db.Questions.Where(x => x.Id == question.Id).FirstOrDefault();
+                        if (existingQuestion == null)
+                        {
+                            question.SurveyId = survey.Id;
+                            db.Questions.Add(question);
+                        }
+                        else
+                        {
+                            existingQuestion.SurveyQuestion = question.SurveyQuestion;
+                            survey.Questions.Add(existingQuestion);
+                        }
                     }
-                    else
-                    {
-                        existingQuestion.SurveyQuestion = question.SurveyQuestion;
-                        survey.Questions.Add(existingQuestion);
-                    }                       
-                }                
-            }
+                }
 
-            db.Entry(survey).State = EntityState.Modified;
-               
+                db.Entry(survey).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -167,6 +150,21 @@ namespace SurveyPage.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult TakeSurvey(int id)
+        {
+            SurveyResponseViewModel surveyResponse = new SurveyResponseViewModel();
+            surveyResponse = db.Surveys
+                .Where(x => x.Id == id)
+                .Select(x => new SurveyResponseViewModel
+                {
+                    SurveyId = x.Id,
+                    SurveyName = x.SurveyName,
+                    SurveyQuestions = x.Questions
+                }).FirstOrDefault();
+            return View(surveyResponse);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
