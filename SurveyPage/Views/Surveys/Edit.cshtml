@@ -1,5 +1,4 @@
-﻿@*@model SurveyPage.Models.Survey*@
-@model SurveyPage.ViewModels.SurveyViewModel
+﻿@model SurveyPage.ViewModels.SurveyViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -11,27 +10,24 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*@Html.HiddenFor(model => model.Id)*@ 
-        @Html.HiddenFor(model=> model.SurveyId)     
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.SurveyId)
     <div class="form-horizontal">
         <div class="form-group">
-            @Html.DisplayNameFor(model=> model.SurveyName)
-            @Html.TextBoxFor(model=> model.SurveyName)
+            @Html.DisplayNameFor(model => model.SurveyName)
+            @Html.TextBoxFor(model => model.SurveyName)
         </div>
 
         <hr />
         <div id="questionform">
-            @*@for (int i = 0; i < Model.Questions.Count; i++)*@
-            @for (int i = 0; i < Model.SurveyQuestions.Count; i++)            
+            @for (int i = 0; i < Model.SurveyQuestions.Count; i++)
             {
-                @Html.HiddenFor(model=> model.SurveyQuestions[i].Id)
+                @Html.HiddenFor(model => model.SurveyQuestions[i].Id)
                 @Html.HiddenFor(model => model.SurveyQuestions[i].SurveyId)
 
                 <div class="form-group">
                     <label>Question @(i + 1)</label>
-                    @*@Html.TextBoxFor(x => x.Questions[i].SurveyQuestion)*@
                     @Html.TextBoxFor(x => x.SurveyQuestions[i].SurveyQuestion)
                 </div>
             }
