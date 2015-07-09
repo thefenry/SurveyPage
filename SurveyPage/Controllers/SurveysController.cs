@@ -57,7 +57,7 @@ namespace SurveyPage.Controllers
         {
             Survey survey = new Survey();
             survey.SurveyName = questions.SurveyName;
-            survey.Questions = new List<Question>();
+            //survey.Questions = new List<Question>();
             foreach (var item in questions.SurveyQuestions)
             {
                 survey.Questions.Add(item);
@@ -114,16 +114,32 @@ namespace SurveyPage.Controllers
         public ActionResult Edit(Survey survey, SurveyViewModel surveyViewModel)
         {
             survey.SurveyName = surveyViewModel.SurveyName;
-            survey.Questions.AddRange(surveyViewModel.SurveyQuestions);
             if (ModelState.IsValid)
             {
-                db.Entry(survey).State = EntityState.Modified;
+            foreach (var question in surveyViewModel.SurveyQuestions)
+            {
+                if (true)               
+                {
+                    var existingQuestion = db.Questions.Where(x => x.Id == question.Id).FirstOrDefault();
+                    if (existingQuestion == null)
+                    {
+                        question.SurveyId = survey.Id;
+                        db.Questions.Add(question);
+                    }
+                    else
+                    {
+                        existingQuestion.SurveyQuestion = question.SurveyQuestion;
+                        survey.Questions.Add(existingQuestion);
+                    }                       
+                }                
+            }
+
+            db.Entry(survey).State = EntityState.Modified;
+               
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //return View(survey);
-            return RedirectToAction("Index");
-
+            return View(surveyViewModel);
         }
 
         // GET: Surveys/Delete/5
