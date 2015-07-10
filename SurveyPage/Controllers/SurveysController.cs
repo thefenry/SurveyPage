@@ -162,6 +162,11 @@ namespace SurveyPage.Controllers
                     SurveyName = x.SurveyName,
                     SurveyQuestions = x.Questions
                 }).FirstOrDefault();
+            foreach (var item in surveyResponse.SurveyQuestions)
+            {
+                surveyResponse.QuestionAnswers.Add(new Answer());
+                
+            }
             return View(surveyResponse);
         }
 
