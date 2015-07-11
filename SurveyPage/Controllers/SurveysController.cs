@@ -162,9 +162,29 @@ namespace SurveyPage.Controllers
                     SurveyName = x.SurveyName,
                     SurveyQuestions = x.Questions
                 }).FirstOrDefault();
+            foreach (var item in surveyResponse.SurveyQuestions)
+            {
+                Answer answer = new Answer();
+                answer.Question = item;
+                answer.QuestionId = item.Id;
+                surveyResponse.QuestionAnswers.Add(answer);                
+            }
             return View(surveyResponse);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TakeSurvey(SurveyResponseViewModel SurveyResponseViewModel)
+        {
+            foreach (var item in SurveyResponseViewModel.QuestionAnswers)
+            {
+                var question = db.Questions.Where(x => x.Id == item.QuestionId).FirstOrDefault();
+                item.SurveyId = question.SurveyId;
+                question.Answers.Add(item);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         protected override void Dispose(bool disposing)
         {

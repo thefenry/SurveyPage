@@ -28,8 +28,8 @@ namespace SurveyPage.ViewModels
 
         public int SurveyId { get; set; }
         public string SurveyName { get; set; }
-        public IList<Question> SurveyQuestions { get; set; }
-        public IList<Answer> QuestionAnswers { get; set; }
+        public List<Question> SurveyQuestions { get; set; }
+        public List<Answer> QuestionAnswers { get; set; }
     }
 
 
