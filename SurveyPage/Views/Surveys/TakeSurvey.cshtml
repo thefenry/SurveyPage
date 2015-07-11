@@ -4,14 +4,14 @@
     ViewBag.Title = "TakeSurvey";
 }
 
-<h2>TakeSurvey</h2>
 @using (Html.BeginForm())
 {
+    <h2>@Model.SurveyName</h2>
     @Html.AntiForgeryToken()
 
     //foreach (var item in Model.SurveyQuestions)
-    for (int i = 0; i < Model.SurveyQuestions.Count; i++)       
-        {
+    for (int i = 0; i < Model.SurveyQuestions.Count; i++)
+    {
         <div class="form-group">
             <div>
                 @*@Html.DisplayFor(modelItem => item.SurveyQuestion)*@
@@ -20,8 +20,9 @@
             <div>
                 @for (int c = 0; c < 5; c++)
                 {
-                @Html.RadioButtonFor(x=> x.QuestionAnswers[i].QuestionAnswer, i+1)
-                    
+                    @Html.RadioButtonFor(modelItem => modelItem.QuestionAnswers[i].QuestionAnswer, c + 1)
+                    @Html.HiddenFor(modelItem => modelItem.QuestionAnswers[i].QuestionId)
+
                 }
             </div>
             <div>
@@ -31,4 +32,6 @@
             </div>
         </div>
     }
+    <input type="submit" value="Submite Response" />
+
 }

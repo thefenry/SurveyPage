@@ -12,6 +12,5 @@ namespace SurveyPage.Models
         public int QuestionId { get; set; }
         public int SurveyId { get; set; }
         public virtual Question Question { get; set; }
-        //public virtual Survey Survey { get; set; }
     }
 }
