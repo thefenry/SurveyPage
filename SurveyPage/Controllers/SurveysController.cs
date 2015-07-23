@@ -179,7 +179,6 @@ namespace SurveyPage.Controllers
             foreach (var item in SurveyResponseViewModel.QuestionAnswers)
             {
                 var question = db.Questions.Where(x => x.Id == item.QuestionId).FirstOrDefault();
-                item.SurveyId = question.SurveyId;
                 question.Answers.Add(item);
             }
             db.SaveChanges();

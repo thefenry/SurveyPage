@@ -14,7 +14,6 @@ namespace SurveyPage.Models
         //public virtual ApplicationUser User { get; set; }
         public string SurveyName { get; set; }
         public virtual List<Question> Questions { get; set; }
-        //public virtual List<Answer> Answers { get; set; }
 
         public Survey()
         {
