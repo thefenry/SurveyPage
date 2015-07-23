@@ -30,8 +30,10 @@ namespace SurveyPage.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<SurveyPage.Models.Survey> Surveys { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
 
-        public System.Data.Entity.DbSet<SurveyPage.Models.Question> Questions { get; set; }
+        public DbSet<Question> Questions { get; set; }
+
+        public DbSet<Answer> Answers { get; set; }
     }
 }

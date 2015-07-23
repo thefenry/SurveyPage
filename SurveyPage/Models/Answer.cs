@@ -9,8 +9,7 @@ namespace SurveyPage.Models
     {
         public int Id { get; set; }
         public int QuestionAnswer { get; set; }
-        public int QuestionId { get; set; }
-        public int SurveyId { get; set; }
+        public int QuestionId { get; set; } 
         public virtual Question Question { get; set; }
     }
 }
