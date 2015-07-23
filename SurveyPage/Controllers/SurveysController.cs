@@ -58,7 +58,8 @@ namespace SurveyPage.Controllers
             Survey survey = new Survey();
             survey.SurveyName = questions.SurveyName;
             ApplicationUser currentUser = db.Users.Find(User.Identity.GetUserId());
-            survey.User = currentUser; 
+            survey.CreatedBy = currentUser;
+            //survey.User = currentUser; 
             //survey.Questions = new List<Question>();
             foreach (var item in questions.SurveyQuestions)
             {

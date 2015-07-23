@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,8 +10,9 @@ namespace SurveyPage.Models
     {
         public int Id { get; set; }
         public string SurveyName { get; set; }
-        
-        public virtual ApplicationUser User { get; set; }
+        public string CreatedByID { get; set; }
+        [Display(Name = "Created By")]
+        public virtual ApplicationUser CreatedBy { get; set; }
         public virtual List<Question> Questions { get; set; }
 
         public Survey()

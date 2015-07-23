@@ -16,6 +16,7 @@
         </th>
         <th></th>
         <th>
+           @Html.DisplayNameFor(model => model.CreatedBy)
         </th>
     </tr>
 
@@ -31,7 +32,7 @@
                 @Html.ActionLink("Delete", "Delete", new { id = survey.Id })
             </td>
             <td>
-                @Html.DisplayFor(model=> survey.User.Email)
+                @Html.DisplayFor(model=> survey.CreatedBy.Email)
             </td>
         </tr>
     }

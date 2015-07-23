@@ -8,7 +8,7 @@ namespace SurveyPage.Models
 {
     public class MyUser : IdentityUser
     {
-        public virtual ICollection<Survey> Surveys { get; set; }
+        public virtual ICollection<Survey> CreatedBy { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
     }
