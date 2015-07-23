@@ -15,6 +15,7 @@ namespace SurveyPage.ViewModels
 
         public int SurveyId { get; set; }
         public string SurveyName { get; set; }
+        public ApplicationUser User { get; set; }
         public IList<Question> SurveyQuestions { get; set; }
     }
 
