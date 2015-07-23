@@ -6,16 +6,16 @@ using System.Web;
 
 namespace SurveyPage.ViewModels
 {
-    public class SurveyViewModel
+    public class SurveyQuestionViewModel
     {
-        public SurveyViewModel()
+        public SurveyQuestionViewModel()
         {
             this.SurveyQuestions = new List<Question>();
         }
 
         public int SurveyId { get; set; }
         public string SurveyName { get; set; }
-        public ApplicationUser User { get; set; }
+        //public ApplicationUser User { get; set; }
         public IList<Question> SurveyQuestions { get; set; }
     }
 

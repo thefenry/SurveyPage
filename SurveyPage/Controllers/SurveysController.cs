@@ -43,7 +43,7 @@ namespace SurveyPage.Controllers
         // GET: Surveys/Create
         public ActionResult Create()
         {
-            SurveyViewModel surveyViewModel = new SurveyViewModel();
+            SurveyQuestionViewModel surveyViewModel = new SurveyQuestionViewModel();
             surveyViewModel.SurveyQuestions.Add(new Question());
             return View(surveyViewModel);
         }
@@ -53,7 +53,7 @@ namespace SurveyPage.Controllers
         //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(SurveyViewModel questions)
+        public async Task<ActionResult> Create(SurveyQuestionViewModel questions)
         {
             Survey survey = new Survey();
             survey.SurveyName = questions.SurveyName;
@@ -78,17 +78,17 @@ namespace SurveyPage.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SurveyViewModel surveyViewModel = new SurveyViewModel();
-            surveyViewModel = db.Surveys
+            SurveyQuestionViewModel surveyQuestionViewModel = new SurveyQuestionViewModel();
+            surveyQuestionViewModel = db.Surveys
                                 .Where(x => x.Id == id)
-                                .Select(x => new SurveyViewModel
+                                .Select(x => new SurveyQuestionViewModel
                                 {
                                     SurveyName = x.SurveyName,
                                     SurveyId = x.Id,
                                     SurveyQuestions = x.Questions
                                 }).FirstOrDefault();
 
-            return View(surveyViewModel);
+            return View(surveyQuestionViewModel);
         }
 
         // POST: Surveys/Edit/5
@@ -97,26 +97,23 @@ namespace SurveyPage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Edit(Survey survey)
-        public ActionResult Edit(Survey survey, SurveyViewModel surveyViewModel)
+        public ActionResult Edit(Survey survey, SurveyQuestionViewModel surveyViewModel)
         {
             survey.SurveyName = surveyViewModel.SurveyName;
             if (ModelState.IsValid)
             {
                 foreach (var question in surveyViewModel.SurveyQuestions)
                 {
-                    if (true)
+                    var existingQuestion = db.Questions.Where(x => x.Id == question.Id).FirstOrDefault();                    
+                    if (existingQuestion == null)
                     {
-                        var existingQuestion = db.Questions.Where(x => x.Id == question.Id).FirstOrDefault();
-                        if (existingQuestion == null)
-                        {
-                            question.SurveyId = survey.Id;
-                            db.Questions.Add(question);
-                        }
-                        else
-                        {
-                            existingQuestion.SurveyQuestion = question.SurveyQuestion;
-                            survey.Questions.Add(existingQuestion);
-                        }
+                        question.SurveyId = survey.Id;
+                        db.Questions.Add(question);
+                    }
+                    else
+                    {
+                        existingQuestion.SurveyQuestion = question.SurveyQuestion;
+                        survey.Questions.Add(existingQuestion);
                     }
                 }
 
@@ -170,7 +167,7 @@ namespace SurveyPage.Controllers
                 Answer answer = new Answer();
                 answer.Question = item;
                 answer.QuestionId = item.Id;
-                surveyResponse.QuestionAnswers.Add(answer);                
+                surveyResponse.QuestionAnswers.Add(answer);
             }
             return View(surveyResponse);
         }
@@ -179,10 +176,13 @@ namespace SurveyPage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TakeSurvey(SurveyResponseViewModel SurveyResponseViewModel)
         {
-            foreach (var item in SurveyResponseViewModel.QuestionAnswers)
+            ApplicationUser currentUser = db.Users.Find(User.Identity.GetUserId());
+
+            foreach (var response in SurveyResponseViewModel.QuestionAnswers)
             {
-                var question = db.Questions.Where(x => x.Id == item.QuestionId).FirstOrDefault();
-                question.Answers.Add(item);
+                response.AnsweredBy = currentUser;
+                var question = db.Questions.Where(x => x.Id == response.QuestionId).FirstOrDefault();
+                question.Answers.Add(response);
             }
             db.SaveChanges();
             return RedirectToAction("Index");

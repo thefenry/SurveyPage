@@ -10,9 +10,11 @@ namespace SurveyPage.Models
     {
         public int Id { get; set; }
         public string SurveyName { get; set; }
+        
         public string CreatedByID { get; set; }
         [Display(Name = "Created By")]
         public virtual ApplicationUser CreatedBy { get; set; }
+        
         public virtual List<Question> Questions { get; set; }
 
         public Survey()
