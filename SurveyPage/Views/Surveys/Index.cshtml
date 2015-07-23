@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.SurveyName)
         </th>
         <th></th>
+        <th>
+           @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
     </tr>
 
     @foreach (var survey in Model)
@@ -27,6 +30,9 @@
                 @Html.ActionLink("Edit", "Edit", new { id = survey.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = survey.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = survey.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(model=> survey.CreatedBy.Email)
             </td>
         </tr>
     }
