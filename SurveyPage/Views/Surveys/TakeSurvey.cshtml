@@ -6,8 +6,9 @@
 
 @using (Html.BeginForm())
 {
-    <h2>@Model.SurveyName</h2>
     @Html.AntiForgeryToken()
+    
+    <h2>@Model.SurveyName</h2>
 
     //foreach (var item in Model.SurveyQuestions)
     for (int i = 0; i < Model.SurveyQuestions.Count; i++)
@@ -22,7 +23,6 @@
                 {
                     @Html.RadioButtonFor(modelItem => modelItem.QuestionAnswers[i].QuestionAnswer, c + 1)
                     @Html.HiddenFor(modelItem => modelItem.QuestionAnswers[i].QuestionId)
-
                 }
             </div>
             <div>
