@@ -26,3 +26,7 @@ textarea {
  .sm-form-input{
     max-width: 280px;
 }
+
+ .form-header{
+     text-align:center;
+ }

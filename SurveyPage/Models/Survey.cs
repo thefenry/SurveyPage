@@ -9,6 +9,8 @@ namespace SurveyPage.Models
     public class Survey
     {
         public int Id { get; set; }
+
+        [Display(Name="Survey Name")]
         public string SurveyName { get; set; }
         
         public string CreatedByID { get; set; }
