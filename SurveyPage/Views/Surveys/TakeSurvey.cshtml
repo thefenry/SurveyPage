@@ -7,31 +7,45 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <h2>@Model.SurveyName</h2>
 
-    //foreach (var item in Model.SurveyQuestions)
-    for (int i = 0; i < Model.SurveyQuestions.Count; i++)
-    {
-        <div class="form-group">
-            <div>
-                @*@Html.DisplayFor(modelItem => item.SurveyQuestion)*@
-                @Html.DisplayFor(modelItem => modelItem.SurveyQuestions[i].SurveyQuestion)
+    <div class="form-horizontal">
+        <h2>@Model.SurveyName</h2>
+        <div class="form-group form-header">
+            @*<div class="col-md-3 col-md-offset-2"></div>*@
+            <div class="col-md-1 col-md-offset-5">
+                1
             </div>
-            <div>
-                @for (int c = 0; c < 5; c++)
-                {
-                    @Html.RadioButtonFor(modelItem => modelItem.QuestionAnswers[i].QuestionAnswer, c + 1)
-                    @Html.HiddenFor(modelItem => modelItem.QuestionAnswers[i].QuestionId)
-                }
+            @*<div class="col-md-1">
+                
             </div>
-            <div>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <div class="col-md-1">
+                
+            </div>
+            <div class="col-md-1">
+                
+            </div>*@
+            <div class="col-md-1 col-md-offset-3">
+                5
             </div>
         </div>
-    }
-    <input type="submit" value="Submite Response" />
+        <hr />
+        @for (int i = 0; i < Model.SurveyQuestions.Count; i++)
+        {
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-2">
+                    @Html.DisplayFor(modelItem => modelItem.SurveyQuestions[i].SurveyQuestion)
+                </div>
+                <div>
+                    @for (int c = 0; c < 5; c++)
+                    {
+                        @Html.RadioButtonFor(modelItem => modelItem.QuestionAnswers[i].QuestionAnswer, c + 1, new { @class = "col-md-1" })
+                        @Html.HiddenFor(modelItem => modelItem.QuestionAnswers[i].QuestionId)
+                    }
+                </div>
+            </div>
+        }
 
+    </div>
+    <hr />
+    <input type="submit" value="Submit Response" class="btn btn-default col-md-2 col-md-offset-8" />
 }
